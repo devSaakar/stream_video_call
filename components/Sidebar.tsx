@@ -15,7 +15,6 @@ const Sidebar = () => {
         {sidebarData.map((link, index) => {
           const { label, route, imgURL } = link;
           const isActive = pathname === route;
-          console.log('isActive,pathname :>> ', isActive,pathname,route);
           return (
             <Link
               href={route}
