@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 
 interface HomeCardProps {
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   title: string;
   description: string;
   icon: string;
@@ -11,7 +10,6 @@ interface HomeCardProps {
 }
 
 const HomeCard = ({
-  onClick,
   title,
   description,
   icon,
@@ -23,7 +21,6 @@ const HomeCard = ({
         "px-4 py-6 flex flex-col justify-between w-full xl:max-w-[270px] min-h-[260px] rounded-lg cursor-pointer",
         className
       )}
-      onClick={onClick}
     >
       <div className="flex-center glassmorphism size-12 rounded-md">
         <Image src={icon} alt="meeting" width={27} height={27} />

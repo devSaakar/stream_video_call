@@ -2,7 +2,7 @@ import { MEETING_STATES } from "./types";
 
 export const cardList = [
   {
-    value: MEETING_STATES.JOINING,
+    value: MEETING_STATES.INSTANT,
     title: "New Meeting",
     description: "Start an instant meeting",
     icon: "icons/add-meeting.svg",
@@ -16,7 +16,7 @@ export const cardList = [
     className: "bg-blue-1",
   },
   {
-    value: MEETING_STATES.INSTANT,
+    value: MEETING_STATES.RECORDINGS,
     title: "View Recordings",
     description: "Checkout your recordings",
     icon: "icons/recordings.svg",
