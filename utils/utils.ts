@@ -11,3 +11,14 @@ export const getFormattedDate = (updatedDate = new Date()) => {
     dateStyle: "full",
   }).format(updatedDate);
 };
+
+export const humanCase = (
+  str: string,
+  charReplaced = "-",
+  replacedChar = " "
+) =>
+  str
+    .toLowerCase()
+    .split(charReplaced)
+    .join(replacedChar)
+    .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase());

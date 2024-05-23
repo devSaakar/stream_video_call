@@ -36,7 +36,7 @@ const MeetingModal = ({
       >
         <div className="flex flex-col gap-6">
           {image && (
-            <div>
+            <div className="self-center">
               <Image src={image} alt="image" width={72} height={72} />
             </div>
           )}

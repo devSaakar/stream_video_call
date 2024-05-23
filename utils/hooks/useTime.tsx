@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getFormattedDate, getFormattedTime } from "./utils";
+import { getFormattedDate, getFormattedTime } from "../utils";
 
 const useTime = () => {
   const timeoutId = useRef(0);

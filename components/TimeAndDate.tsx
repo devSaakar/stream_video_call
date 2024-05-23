@@ -1,5 +1,5 @@
 "use client";
-import useTime from "@/utils/useTime";
+import useTime from "@/utils/hooks/useTime";
 import React from "react";
 
 const TimeAndDate = () => {
