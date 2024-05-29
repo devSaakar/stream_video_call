@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import HomeCard from "./HomeCard";
 import { cardList } from "./constant";
 import { MEETING_STATES } from "./types";
@@ -10,6 +10,7 @@ import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useToast } from "../ui/use-toast";
 import { Textarea } from "../ui/textarea";
 import ReactDatePicker from "../ui/date-picker";
+import { Input } from "../ui/input";
 
 const MeetingTypeList = () => {
   const router = useRouter();
@@ -18,8 +19,15 @@ const MeetingTypeList = () => {
   const [values, setValues] = useState({
     dateTime: new Date(),
     description: "",
+    link: "",
   });
   const [callDetails, setCallDetails] = useState<Call>();
+
+  const meetingLink = useMemo(
+    () => `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`,
+    [callDetails]
+  );
+
   console.log("values", values);
 
   const { user } = useUser();
@@ -37,7 +45,7 @@ const MeetingTypeList = () => {
       if (!call) throw new Error("Failed to create call");
       const startsAt =
         values.dateTime.toISOString() || new Date(Date.now()).toISOString();
-      const description = values.description || "Instant Meeting";
+      const description = values?.description || "Instant Meeting";
       await call.getOrCreate({
         data: {
           starts_at: startsAt,
@@ -47,7 +55,7 @@ const MeetingTypeList = () => {
         },
       });
       setCallDetails(call);
-      if (!values.description) {
+      if (!values?.description) {
         router.push(`/meeting/${call.id}`);
       }
       toast({ title: "Meeting Created" });
@@ -91,9 +99,7 @@ const MeetingTypeList = () => {
           title="Create Meeting"
           className="text-center"
           handleClick={() => {
-            navigator.clipboard.writeText(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`
-            );
+            navigator.clipboard.writeText(meetingLink);
             toast({ title: "Link Copy" });
           }}
           image="/icons/checked.svg"
@@ -106,7 +112,7 @@ const MeetingTypeList = () => {
           onClose={() => setMeetingState(undefined)}
           title="Create Meeting"
           className="text-center"
-          buttonText="Start Meeting"
+          buttonText="Schedule Meeting"
           handleClick={createMeeing}
         >
           <div>
@@ -154,6 +160,21 @@ const MeetingTypeList = () => {
         buttonText="Start Meeting"
         handleClick={createMeeing}
       />
+
+      <MeetingModal
+        isOpen={meetingState === MEETING_STATES.JOINING}
+        onClose={() => setMeetingState(undefined)}
+        title="Type the LINK here:"
+        className="text-center"
+        buttonText="Join Meeting"
+        handleClick={() => router.push(values.link)}
+      >
+        <Input
+          placeholder="Meeting Link"
+          className="border-none bg-dark-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+          onChange={(e) => setValues({ ...values, link: e.target.value })}
+        />
+      </MeetingModal>
     </section>
   );
 };

@@ -19,10 +19,11 @@ import {
 import { LayoutList, Users } from "lucide-react";
 import { Button } from "../ui/button";
 import { humanCase } from "@/utils/utils";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import EndCallButton from "./EndCallButton";
 
 const MeetingRoom = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const isPersonalRoom = !!searchParams.get("personal");
   const [layout, setLayout] = useState<CallLayoutType>(
@@ -57,7 +58,7 @@ const MeetingRoom = () => {
         </div>
       </div>
       <div className="flex-center fixed bottom-0 w-full gap-5">
-        <CallControls />
+        <CallControls onLeave={() => router.push("/")} />
         <DropdownMenu>
           <div className="flex-center">
             <DropdownMenuTrigger className="cursor-pointer rounded-2xl bg-dark-1 px-4 py-2 hover:bg-[#4c535b]">
